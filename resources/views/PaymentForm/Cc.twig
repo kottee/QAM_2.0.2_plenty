@@ -1,0 +1,18 @@
+<script src="{{ plugin_path('Novalnet') }}/js/cc.js"></script>
+<input type="hidden" id="nn_cc_standard_style_label" value="{{nnFormDesign['standard_style_label']}}" />
+<input type="hidden" id="nn_cc_standard_style_input" value="{{nnFormDesign['standard_style_input']}}" />
+<input type="hidden" id="nn_cc_standard_style_css" value="{{nnFormDesign['standard_style_css']}}" />
+<form method="post" id="cc_form" name="cc_form" action="{{nnPaymentProcessUrl}}">
+	<input type="hidden" id="nn_pan_hash" name="nn_pan_hash" />
+    	<input type="hidden" id="unique_id" name="unique_id" />
+	<input type="hidden" id="paymentKey" name="paymentKey" value="{{paymentMopKey}}" />
+	<iframe id="nniframe" src="{{nnCcFormUrl}}" frameborder="0" onload="initIframe()" scrolling="no" width="100%"></iframe>
+	<button type="button" class="btn btn-primary" id="novalnet_form_btn" onclick="getHash(this)">
+		{{ trans("Novalnet::PaymentMethod.submit_button_text") }}
+	</button>
+	<a href="/checkout">
+		<button type="button" class="btn btn-primary">
+			{{ trans("Novalnet::PaymentMethod.cancel_button_text") }}
+		</button>
+	</a>
+</form>

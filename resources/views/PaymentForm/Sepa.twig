@@ -1,0 +1,58 @@
+<script>
+jQuery(document).ready( function() {
+jQuery('#sepa_iban').on('keypress',function ( event ) {
+            var keycode = ( 'which' in event ) ? event.which : event.keyCode;                                        
+                if(event.target.value.length < 2 ) {
+                    reg     = /^(?:[a-zA-Z]+$)/;
+                    return reg.test( String.fromCharCode( keycode ) );                    
+                }
+                else {
+                    reg     = /^(?:[0-9]+$)/;                    
+                    return reg.test( String.fromCharCode( keycode ) );                                        
+                }                
+            
+        });
+});
+</script>
+
+<form method="post" id="sepa_form" name="sepa_form" action="{{nnPaymentProcessUrl}}">
+<input type="hidden" id="paymentKey" name="paymentKey" value="{{paymentMopKey}}" />
+<input type='hidden' id='nn_sepa_valid_dob_msg' value='{{nnSepaHiddenValue["sepadoberror"]}}'>
+	
+	<div class="account_holder-section">
+        <div class="label"><label for="sepa_cardholder">{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}</label></div>
+        <div class="content">
+            <input type="text" id="sepa_cardholder" name="sepa_cardholder">
+        </div>
+    </div>
+	
+    <div class="sepa_iban-section">
+        <div class="label"><label for="sepa_iban">{{trans("Novalnet::PaymentMethod.sepa_iban_label")}}</label></div>
+        <div class="content">
+            <input type="text" name="sepa_iban" id="sepa_iban" autocomplete="off" style="text-transform : uppercase;">
+            <span id="novalnet_sepa_iban_span"></span>
+        </div>
+    </div></br>
+ 
+    {% if nnGuaranteeStatus == "guarantee" %}
+    	<div class="novalnet_sepa_dob-section">
+	<div class="label">
+      		<label for="nn_sepa_birthday">{{trans("Novalnet::PaymentMethod.birthdate_label")}}</label>
+       </div>
+
+		<div class="content">
+		    <input type="date" name="nn_sepa_birthday" id="nn_sepa_birthday" value="{{nnSepaDobValue}}">
+		</div>
+		<div class="clear"></div>
+    	</div></br> 
+    {% endif %}    
+	
+	<button type="submit" class="btn btn-primary" id="novalnet_form_btn" onclick="">
+		{{ trans("Novalnet::PaymentMethod.submit_button_text") }}
+	</button>
+	<a href="/checkout">
+		<button type="button" class="btn btn-primary">
+			{{ trans("Novalnet::PaymentMethod.cancel_button_text") }}
+		</button>
+	</a>
+</form>

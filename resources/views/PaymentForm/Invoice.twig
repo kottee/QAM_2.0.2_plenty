@@ -1,0 +1,31 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+	$("form[name=invoice_form]").submit(function(evt) {
+		if ((($("#nn_invoice_birthday").val() == 'undefine') || ($("#nn_invoice_birthday").val() == ''))) {
+			evt.preventDefault();    
+			alert($("#nn_invoice_valid_dob_msg").val());
+		}
+	});
+	}); 
+</script>
+<form method="post" id="invoice_form" name="invoice_form" action="{{nnPaymentProcessUrl}}">
+	<input type="hidden" id="paymentKey" name="paymentKey" value="{{paymentMopKey}}" />
+
+  <div class="novalnet_invoice_dob-section">
+		<div class="label">
+      <label for="invoice_bic">{{trans("Novalnet::PaymentMethod.birthdate_label")}}</label>
+    </div>
+    <input type="hidden" name="nn_invoice_valid_dob_msg" id="nn_invoice_valid_dob_msg" value="{{trans("Novalnet::PaymentMethod.doberror")}}">
+		<div class="content">
+		    <input type="date" name="nn_invoice_birthday" id="nn_invoice_birthday" value="{{nnDobValue}}">
+		</div>
+  </div></br>  	
+	<button type="submit" class="btn btn-primary" id="novalnet_form_btn" onclick="">
+		{{ trans("Novalnet::PaymentMethod.submit_button_text") }}
+	</button>
+	<a href="/checkout">
+		<button type="button" class="btn btn-primary">
+			{{ trans("Novalnet::PaymentMethod.cancel_button_text") }}
+		</button>
+	</a>
+</form>
